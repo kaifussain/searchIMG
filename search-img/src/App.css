@@ -1,0 +1,140 @@
+#headDiv{
+    display: grid;
+    grid-template-columns: 120px 3fr 40px;
+    justify-content: center;
+    gap:1rem;
+    /* border:1px solid yellow; */
+}
+#logoImg{
+    width: 100px;
+    /* border:1px solid rgba(135, 135, 135, 0.314); */
+    padding:5px 8px;
+    border-radius: 10px;
+    /* position: absolute;
+    left:0; */
+}
+#searchForm{
+    display: flex;
+    /* position:absolute; */
+    /* right:0; */
+    /* margin-left: 120px; */
+}
+#searchInput{
+    padding:10px 15px;
+    width:40vw;
+    background-color: transparent;
+    outline: none;
+    color:white;
+    border: 1px solid gray;
+    border-radius: 100px 0 0 100px;
+    border-right: none;
+}
+#searchBtn{
+    padding:5px 15px 5px 10px;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 0 100px 100px 0;
+    border-left:none;
+    cursor: pointer;
+}
+#searchBtn img{
+    width:20px;
+}
+#userDiv{
+    border-radius: 100px;
+    /* border:1px solid red; */
+    width:38px;
+    height: 38px;
+    overflow: hidden;
+    cursor: pointer;
+}
+#userDiv img{
+    width:38px;
+}
+#userDataDiv{
+    z-index: 1;
+    position: absolute;
+    border:1px solid rgb(117, 117, 117);
+    margin-top: 10px;
+    right:8px;
+    background-color: #292929;
+    padding:20px;
+    border-radius: 15px;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+#user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border:1px solid green; */
+}
+#userDataDiv img{
+    width:70px;
+    height: 70px;
+    border-radius: 8px;
+}
+#userPrefDiv{
+    /* border:1px solid yellow; */
+    margin-top: 16px;
+    
+}
+#suggestionDiv{
+    display: flex;
+    /* border:1px solid gray; */
+    padding:15px 7px;
+    align-items: center;
+}
+.suggestionItem{
+    /* border:1px solid gray; */
+    border-right:2px solid gray;
+    /* margin:0 5px; */
+    /* padding-left:0 5px; */
+    padding: 5px 16px;
+    cursor: pointer;
+    transition: color .1s;
+}
+.suggestionItem:hover{
+    /* border-left: 2px solid rgb(71, 171, 218); */
+    color: rgb(71, 171, 218);
+}
+#searchResultDiv{
+    margin-top: 20px;
+    /* border-top:3px solid rgba(53, 115, 170, 0.588); */
+    position:relative;
+    /* border-radius: 10px; */
+}
+#searchResultTitle{
+    position:absolute;
+    top:-22px;
+    left:-12px;
+    padding:5px 20px;
+    border:2px solid rgb(53, 115, 170);
+    border-radius:0 100px 100px 0;
+    /* background-color: rgba(53, 115, 170, 0.565); */
+}
+.fromLeftAni{
+    animation: fromLeft 1s ease;
+}
+@keyframes fromLeft{
+    0%{
+        transform: translateX(-100px);
+        color:transparent;
+        border-color:transparent;
+        background-color: transparent;
+    }
+}
+#searchResultImgDiv{
+    /* border:1px solid rgb(69, 234, 159); */
+    /* margin:20px 10px; */
+    padding-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.searchResultImg{
+    width: 260px;
+    margin:8px;
+}
+
