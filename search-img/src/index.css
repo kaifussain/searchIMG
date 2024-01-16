@@ -1,6 +1,9 @@
 body{
+    margin:6px;
     background-color: #212121;
     color:rgb(227, 227, 227);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     /* min-width: 520px; */
+    /* overflow: hidden; */
+    overflow-x: hidden;
 }
