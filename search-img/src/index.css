@@ -3,7 +3,21 @@ body{
     background-color: #212121;
     color:rgb(227, 227, 227);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    /* min-width: 520px; */
-    /* overflow: hidden; */
-    overflow-x: hidden;
 }
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #6d6d6dda;
+    border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+  
+*{
+    scrollbar-width: thin;
+    scrollbar-color: #6d6d6dda transparent;
+}
+  
