@@ -1,7 +1,6 @@
 :root{
     --bg-l:rgb(227, 227, 227);
-    --text-l:black;
-
+    /* --text-l:black; */
 }
 .lMode{
     background-color: var(--bg-l);
@@ -17,7 +16,6 @@
     background-color: #212121;
     gap:1rem;
     padding: 5px;
-    /* border-bottom:1px solid rgba(128, 128, 128, 0.466); */
     position: fixed;
     top:0;
     left:0;
@@ -76,12 +74,12 @@
 }
 
 #toggleDarkMode div{
-    width:14px;
-    height: 14px;
+    width:12px;
+    height: 12px;
     border-radius: 10px;
     position:absolute;
-    top:2px;
-    left:2px;
+    top:2.8px;
+    left:3px;
 }
 .DarkMode{
     transition: all .2s ease;
@@ -103,7 +101,7 @@
     content:"L";
     font-size: 12px;
     position: absolute;
-    top:-1px;
+    top:-2px;
     right:-15px;
 }
 #userDiv{
@@ -192,40 +190,28 @@
 #searchResultTitle.lMode{
     background-color: var(--bg-l);
 }
-/* .fromLeftAni{
-    animation: fromRight 1s ease;
-}
-@keyframes fromLeft{
-    0%{
-        transform: translateX(-100px);
-        color:transparent;
-        border-color:transparent;
-        background-color: transparent;
-    }
-} */
+
 #searchResultImgDiv{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* border:1px solid yellow; */
+    /* border:2px solid yellow; */
 }
 .searchResultImg{
-    /* border:1px solid yellow; */
-    /* width: 550px; */
     height: 240px;
     margin:1vw 1vw;
     border-radius: 5px;
 }
 #loading{
-    height: 40px;
-    width:40px;
+    height: 34px;
+    width:34px;
     margin:auto;
     margin-top:20px;
     margin-bottom:20px;
     align-items: center;
-    border:8px solid rgba(177, 177, 177, 0);
+    border:6px solid rgba(177, 177, 177, 0);
     border-radius: 100px;
-    border-top:8px dotted rgb(150, 150, 150);
+    border-top:6px dotted rgb(150, 150, 150);
     animation:loadingAni 1s linear infinite;
 }
 @keyframes loadingAni {
@@ -236,7 +222,29 @@
         transform: rotate(360deg) skewX(20deg);
     }
 }
-
+#moreBtn{
+    position:fixed;
+    bottom:8px;
+    right:12px;
+    font-size: 40px;
+    background-color: transparent;
+    background-color: rgba(142, 142, 142, 0.243);
+    color:white;
+    border:2px solid gray;
+    padding:0px 11px;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all .3s ease;
+}
+.hideMoreBtn{
+    transform: translateY(150px);
+}
+#moreBtn:hover{
+    border-color:rgb(87, 151, 230);
+}
+#moreBtn.lMode{
+    color:black;
+}
 .hide{
     display: none;
 }

@@ -5,12 +5,15 @@ body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
+  }
+::-webkit-scrollbar-thumb:hover{
+    background-color: #396eaada;
   }
   
   ::-webkit-scrollbar-thumb {
     background-color: #6d6d6dda;
-    border-radius: 6px;
+    border-radius:20px 0 0 20px;
 }
 ::-webkit-scrollbar-track {
     background-color: transparent;
