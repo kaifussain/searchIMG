@@ -55,14 +55,12 @@ function App() {
   async function fetchImgs() {
     if (searchNew) {
       setFetchedImgs([]);
-      // setSearchNew(false);
     }
     setLoading(true);
 
     const response = await fetch(url);
     const data = await response.json();
 
-    // setFetchedImgs(data.results);
     setFetchedImgs(prev => [...prev,...data.results]);
     console.log("fechImgs");
     setLoading(false);
@@ -71,8 +69,8 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
     if (newInput.trim() !== "") {
+      setPage(1);
       setSearchNew(true);
-      setPage(1)
       setImgSubj(newInput);
       setNewInput("");
     }
@@ -85,7 +83,6 @@ function App() {
     document.getElementById('moreBtn').classList.add('hideMoreBtn');
     setSearchNew(false);
     setPage((prev) => prev + 1);
-
   }
   console.log("app end");
 
@@ -149,6 +146,7 @@ function App() {
           <div
             className="suggestionItem"
             onClick={() => {
+              setPage(1);
               setSearchNew(true);
               setImgSubj("Wallpaper");
             }}
@@ -159,6 +157,7 @@ function App() {
             className="suggestionItem"
             onClick={() => {
               setSearchNew(true);
+              setPage(1);
               if (imgSubj !== "Minimal") setImgSubj("Minimal");
             }}
             >
@@ -167,6 +166,7 @@ function App() {
           <div
             className="suggestionItem"
             onClick={() => {
+              setPage(1);
               setSearchNew(true);
               if (imgSubj !== "Asthetic") setImgSubj("Asthetic");
             }}
@@ -176,6 +176,7 @@ function App() {
           <div
             className="suggestionItem"
             onClick={() => {
+              setPage(1);
               setSearchNew(true);
               if (imgSubj !== "AI art") setImgSubj("AI art");
             }}
