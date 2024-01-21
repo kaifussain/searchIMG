@@ -149,7 +149,7 @@ function App() {
               return <ImageC src={img.urls.small} />;
             })
           ) : (
-            loading == false && <div style={{ marginTop:'10px'}}>Nothing here!</div>
+            loading === false && <div style={{ marginTop:'10px'}}>Nothing here!</div>
           )}
         </div>
       </div>
