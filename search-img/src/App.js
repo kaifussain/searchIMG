@@ -178,6 +178,16 @@ function App() {
             onClick={() => {
               setPage(1);
               setSearchNew(true);
+              if (imgSubj !== "Nature") setImgSubj("Nature");
+            }}
+            >
+            Nature
+          </div>
+          <div
+            className="suggestionItem"
+            onClick={() => {
+              setPage(1);
+              setSearchNew(true);
               if (imgSubj !== "AI art") setImgSubj("AI art");
             }}
           >
