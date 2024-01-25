@@ -1,14 +1,22 @@
 import React from 'react'
+import './ImageC.css'
 
 const ImageC = (props) => {
+
+  function handleSelect(){
+    props.handleChangeSelectImg(props.imgUrl, props.imgId);
+    props.changeSelectedBool(true);
+  }
+  
   return (
-    // <div>
+    <div className='imgWrapper'>
         <img
             className="searchResultImg"
             src={props.src}
             alt=":("
+            onClick={handleSelect}
           ></img>
-    // </div>
+    </div>
   )
 }
 

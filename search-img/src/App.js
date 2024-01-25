@@ -4,6 +4,7 @@ import searchIcon from "./resources/searchIcon.png";
 import noProfile from "./resources/NoProfile.png";
 import { useEffect, useState, useRef } from "react";
 import ImageC from "./Components/ImageC";
+import SelectedImg from "./Components/SelectedImg";
 
 function App() {
   console.log("app start");
@@ -17,39 +18,39 @@ function App() {
   const [searchNew, setSearchNew] = useState(true);
   const searchResultImgDiv = useRef(null);
   const [scrollDown, setScrollDown] = useState(false);
+  const [seletedImgUrl, setSelectedImgUrl] = useState('');
+  const [seletedImgId, setSelectedImgId] = useState('');
+  const [selectedBool, setSelectedBool] = useState(false);
 
+  
   let localM = JSON.parse(localStorage.getItem("localM"));
   let url = `https://api.unsplash.com/search/photos?page=${page}&query=${imgSubj}&client_id=${process.env.REACT_APP_API_KEY}`;
 
-  useEffect(() => {
-    const myDiv = searchResultImgDiv.current;
-    const handleScroll = () => {
-      if (myDiv.scrollTop + myDiv.clientHeight > myDiv.scrollHeight - 200) {
-        setScrollDown(true);
-      } else {
-        setScrollDown(false);
-      }
-    };
 
-    myDiv.addEventListener("scroll", handleScroll);
-
-    return () => {
-      myDiv.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrollDown]);
-
+  const handleScroll = () => {
+        let myDiv = searchResultImgDiv.current;
+        let isScrolledToBottom = myDiv.scrollTop + myDiv.clientHeight > myDiv.scrollHeight - 200;
+        
+        if (isScrolledToBottom && !scrollDown) {
+          setScrollDown(true);
+        } else if (!isScrolledToBottom && scrollDown) {
+          setScrollDown(false);
+        }
+        console.log("handleScroll ran ->"+scrollDown)
+  };
+      
+  
   useEffect(() => {
     if (!localM) {
       document.body.classList.add("lMode");
       setDarkMode(false);
     }
-    console.log("useEffect 1");
   }, []);
+  
   function toggleDarkMode() {
     setDarkMode(!darkMode);
     document.body.classList.toggle("lMode", darkMode);
     localStorage.setItem("localM", JSON.stringify(!darkMode));
-    console.log("toggleDarkMode");
   }
 
   async function fetchImgs() {
@@ -57,13 +58,13 @@ function App() {
       setFetchedImgs([]);
     }
     setLoading(true);
-
     const response = await fetch(url);
     const data = await response.json();
 
     setFetchedImgs(prev => [...prev,...data.results]);
     console.log("fechImgs");
     setLoading(false);
+    setScrollDown(false)
 
   }
   function handleSubmit(e) {
@@ -75,7 +76,9 @@ function App() {
       setNewInput("");
     }
   }
+
   useEffect(() => {
+
     if (imgSubj !== "") fetchImgs();
   }, [imgSubj, page]);
 
@@ -84,12 +87,33 @@ function App() {
     setSearchNew(false);
     setPage((prev) => prev + 1);
   }
+
+  function handleChangeSelectImg(url,id){
+    setSelectedImgUrl(url);
+    setSelectedImgId(id);
+  }
+
+  function changeSelectedBool(b){
+    setSelectedBool(b);
+  }
+
+
+  
+
   console.log("app end");
+  
 
   return (
     <div>
+      <div className={selectedBool ? "" : "hide"}>
+        <SelectedImg
+          url={seletedImgUrl}
+          changeSelectedBool={changeSelectedBool}
+        />
+      </div>
       <div id="headDiv" className={darkMode ? "" : "lMode"}>
         <img src={appLogo} id="logoImg"></img>
+
         <form id="searchForm" onSubmit={(e) => handleSubmit(e)}>
           <input
             value={newInput}
@@ -160,7 +184,7 @@ function App() {
               setPage(1);
               if (imgSubj !== "Minimal") setImgSubj("Minimal");
             }}
-            >
+          >
             Minimal
           </div>
           <div
@@ -170,7 +194,7 @@ function App() {
               setSearchNew(true);
               if (imgSubj !== "Asthetic") setImgSubj("Asthetic");
             }}
-            >
+          >
             Asthetic
           </div>
           <div
@@ -180,7 +204,7 @@ function App() {
               setSearchNew(true);
               if (imgSubj !== "Nature") setImgSubj("Nature");
             }}
-            >
+          >
             Nature
           </div>
           <div
@@ -196,7 +220,7 @@ function App() {
         </div>
       </div>
 
-      <div id="searchResultDiv" ref={searchResultImgDiv}>
+      <div id="searchResultDiv" ref={searchResultImgDiv} onScroll={handleScroll}>
         <div id="loading" className={loading ? "" : "hide"}></div>
         <div id="searchResultTitle" className={darkMode ? "" : "lMode"}>
           <span id="searchResultTitleName">{imgSubj}</span>
@@ -204,10 +228,21 @@ function App() {
         <div id="searchResultImgDiv">
           {fetchedImgs.length > 0
             ? fetchedImgs.map((img, i) => {
-                return <ImageC key={page + "-" + i} src={img.urls.small} />;
+                return (
+                  <ImageC
+                    key={img.id}
+                    src={img.urls.regular}
+                    handleChangeSelectImg={handleChangeSelectImg}
+                    imgId={img.id}
+                    imgUrl={img.urls.regular}
+                    changeSelectedBool={changeSelectedBool}
+                  />
+                );
               })
             : loading == false && (
-                <div style={{ marginTop: "10px" }}>Nothing here!</div>
+                <div style={{ marginTop: "10px", fontFamily: "monospace" }}>
+                  Nothing here!
+                </div>
               )}
           <button
             id="moreBtn"
