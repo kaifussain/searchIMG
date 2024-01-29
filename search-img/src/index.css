@@ -10,6 +10,7 @@ body{
     background-color: #212121;
     color:rgb(227, 227, 227);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    user-select: none;
 }
 ::-webkit-scrollbar {
     width: 8px;

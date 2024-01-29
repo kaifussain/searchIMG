@@ -116,9 +116,9 @@
     width:38px;
     height: 38px;
     overflow: hidden;
-    cursor: pointer;
 }
 #userDiv img{
+    cursor: pointer;
     width:38px;
 }
 #userDataDiv{
@@ -130,6 +130,7 @@
     padding:20px;
     border-radius: 15px;
     transition: all .2s ease-in-out;
+    min-width: 260px;
 }
 #userDataDiv.lMode{
     background-color: #d3d3d3;
@@ -146,15 +147,64 @@
     padding:10px;
     gap:8px;
     border-bottom:2px solid rgb(87, 87, 87);
+
+}
+#userName{
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-style: italic;
 }
 #userDataDiv img{
     width:70px;
     height: 70px;
     border-radius: 8px;
 }
-#userPrefDiv{
-    margin-top: 16px;
+#favImgsDiv{
+    margin-top:7px;
+    /* border:1px solid green; */
+    /* width: 150px; */
+    max-width:300px;
+    max-height: 280px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* grid-template-rows: 10px; */
+    align-items: start;
+    justify-content: start;
+    overflow:auto
 }
+#favImgsDiv img{
+    border-radius: 0;
+    transition: none;
+}
+#favImgsDiv .imgWrapper{
+    width: fit-content;
+    height: fit-content;
+    margin:0;
+    padding:5px;
+}
+
+#favImagesDiv{
+    position: relative;
+}
+
+#deleteAllFavBtn{
+    border:none;
+    position:absolute;
+    right:0;
+    top:0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#deleteAllFavBtn img{
+    width:18px;
+    height:18px;
+    filter:brightness(.8);
+}
+#deleteAllFavBtn img:hover{
+   filter:brightness(1);
+}
+
 #suggestionDiv{
     height:36px;
     display: flex;

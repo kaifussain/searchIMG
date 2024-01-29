@@ -4,7 +4,7 @@ import './ImageC.css'
 const ImageC = (props) => {
 
   function handleSelect(){
-    props.handleChangeSelectImg(props.imgUrl, props.imgId);
+    props.handleChangeSelectImg(props.imgUrl, props.imgId, props.dl);
     props.changeSelectedBool(true);
   }
   

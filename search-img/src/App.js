@@ -2,6 +2,7 @@ import "./App.css";
 import appLogo from "./resources/appLogo.png";
 import searchIcon from "./resources/searchIcon.png";
 import noProfile from "./resources/NoProfile.png";
+import deletePng from "./resources/delete.png";
 import { useEffect, useState, useRef } from "react";
 import ImageC from "./Components/ImageC";
 import SelectedImg from "./Components/SelectedImg";
@@ -18,12 +19,15 @@ function App() {
   const [searchNew, setSearchNew] = useState(true);
   const searchResultImgDiv = useRef(null);
   const [scrollDown, setScrollDown] = useState(false);
-  const [seletedImgUrl, setSelectedImgUrl] = useState('');
-  const [seletedImgId, setSelectedImgId] = useState('');
+  const [selectedImgUrl, setSelectedImgUrl] = useState('');
+  const [selectedImgId, setSelectedImgId] = useState('');
+  const [selectedImgDownload, setSelectedImgDownload] = useState('');
   const [selectedBool, setSelectedBool] = useState(false);
+  // const [favImgs, setFavImgs] = useState([]);
+  // const [favImgsId, setFavImgsId] = useState([]);
+  const [favImgs, setFavImgs] = useState({});
 
-  
-  let localM = JSON.parse(localStorage.getItem("localM"));
+
   let url = `https://api.unsplash.com/search/photos?page=${page}&query=${imgSubj}&client_id=${process.env.REACT_APP_API_KEY}`;
 
 
@@ -39,14 +43,20 @@ function App() {
         console.log("handleScroll ran ->"+scrollDown)
   };
       
-  
+  //get from local storage
   useEffect(() => {
-    if (!localM) {
+    if (!JSON.parse(localStorage.getItem("localM"))) {
       document.body.classList.add("lMode");
       setDarkMode(false);
     }
+
+    const storedFavImages = JSON.parse(localStorage.getItem("localFavImgs")) || {};
+    setFavImgs(storedFavImages);
   }, []);
+ 
   
+
+
   function toggleDarkMode() {
     setDarkMode(!darkMode);
     document.body.classList.toggle("lMode", darkMode);
@@ -88,17 +98,38 @@ function App() {
     setPage((prev) => prev + 1);
   }
 
-  function handleChangeSelectImg(url,id){
+  function handleChangeSelectImg(url,id,dl){
     setSelectedImgUrl(url);
     setSelectedImgId(id);
+    setSelectedImgDownload(dl);
   }
 
   function changeSelectedBool(b){
     setSelectedBool(b);
   }
 
-
+  function setFav(url, id) {
+    const updatedFavImages = { ...favImgs };
   
+    if (likedOrNot(id)) {
+      delete updatedFavImages[id];
+    } else {
+      updatedFavImages[id] = url;
+    }
+  
+    setFavImgs(updatedFavImages);
+  
+    localStorage.setItem("localFavImgs", JSON.stringify(updatedFavImages));
+  }
+  
+  function deleteAllFav(){
+    setFavImgs({});
+    localStorage.setItem("localFavImgs", JSON.stringify({}));
+  }
+
+  function likedOrNot(id){
+    return favImgs.hasOwnProperty(id);
+  }
 
   console.log("app end");
   
@@ -107,8 +138,13 @@ function App() {
     <div>
       <div className={selectedBool ? "" : "hide"}>
         <SelectedImg
-          url={seletedImgUrl}
+          url={selectedImgUrl}
+          id={selectedImgId}
+          dl={selectedImgDownload}
           changeSelectedBool={changeSelectedBool}
+          setFav={setFav}
+          likedOrNot={() => likedOrNot(selectedImgId)}
+          downloadlink={fetchedImgs}
         />
       </div>
       <div id="headDiv" className={darkMode ? "" : "lMode"}>
@@ -155,13 +191,45 @@ function App() {
               <img src={noProfile}></img>
               <div id="userName">Kaif Hussain</div>
             </div>
-            <div id="userPrefDiv">
-              <div>Your Preferences</div>
-              <div>None</div>
-            </div>
             <div id="favImagesDiv">
-              <div>Favorite Images</div>
-              <div>None</div>
+              <div style={{
+                marginTop:'12px'
+              }}>
+                <p>Favorite Images</p>
+              <button id="deleteAllFavBtn" title="Delete All Favs" onClick={deleteAllFav} className={Object.keys(favImgs).length > 0 ? '':'hide'}><img src={deletePng}></img></button>
+              </div>
+              <div id='favImgsDiv'>
+              {Object.keys(favImgs).length > 0
+            ? Object.keys(favImgs).map((id) => {
+                return (
+                  // <img src={imgUrl}></img>
+                  <ImageC
+                    // key={favImgsId[i]}
+                    key={id}
+                    src={favImgs[id]}
+                    handleChangeSelectImg={handleChangeSelectImg}
+                    imgId={id}
+                    imgUrl={favImgs[id]}
+                    changeSelectedBool={changeSelectedBool}
+                    // dl={}
+
+                  />
+                );
+              })
+            : (
+                <div style={{
+                  color:'gray',
+                  fontSize:'12px',
+                  fontFamily:'monospace',
+                  // border:'1px solid red',
+                  // position:'absolute',
+                  // left:'0',
+                  // top:'24px'
+                }}>
+                  Nothing here!
+                </div>
+              )}
+              </div>
             </div>
           </div>
         </div>
@@ -236,6 +304,7 @@ function App() {
                     imgId={img.id}
                     imgUrl={img.urls.regular}
                     changeSelectedBool={changeSelectedBool}
+                    dl={img.links.download}
                   />
                 );
               })

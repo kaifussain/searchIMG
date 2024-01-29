@@ -13,10 +13,27 @@
     backdrop-filter:grayscale(10) blur(7px);
 }
 #s_boxL2{
-    padding:0;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.701);
+    /* padding:0; */
     transition: all 1s ease;
     animation:bringSelectAni .5s ease;
+    /* background-color: rgba(0, 0, 0, 0.56); */
+}
+#addToFav, #downloadBtn{
+    transition: all .2s ease;
+}
+#downloadBtn{
+    transition: all .2s ease;
+    filter:saturate(0);
+}
+#addToFav:hover{
+    transform:scale(1.1);
+}
+#addToFav:active{
+    transform:scale(1.5) rotate(-6deg);
+    filter:blur(1px);
+}
+#downloadBtn:hover{
+    filter:saturate(.5)
 }
 @keyframes bringSelectAni {
     0%{
@@ -32,12 +49,17 @@
     }
 }
 
-#s_ImgDiv{
-    max-width: 70vw;
-}
+/* #s_ImgDiv{ */
+    /* max-width: 70vw; */
+    /* width: fit-content; */
+    /* background-color: red; */
+    /* padding:10px; */
+/* } */
 #selectedImg{
     max-height: 70vh;
     max-width: 70vw;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.701);
+
 }
 #s_btns{
     position: absolute;

@@ -4,10 +4,10 @@
     object-fit:cover;
     cursor: pointer;
     border-radius: 4px;
-    transition: all .4s ease;
+    transition: all .3s ease;
 }
 .searchResultImg:hover{
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
 .imgWrapper{
