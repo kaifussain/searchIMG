@@ -13,10 +13,8 @@
     backdrop-filter:grayscale(10) blur(7px);
 }
 #s_boxL2{
-    /* padding:0; */
     transition: all 1s ease;
     animation:bringSelectAni .5s ease;
-    /* background-color: rgba(0, 0, 0, 0.56); */
 }
 #addToFav, #downloadBtn{
     transition: all .2s ease;
@@ -27,6 +25,10 @@
 }
 #addToFav:hover{
     transform:scale(1.1);
+}
+#addToFac:focus{
+    outline: none;
+    background-color: none;
 }
 #addToFav:active{
     transform:scale(1.5) rotate(-6deg);
@@ -49,15 +51,9 @@
     }
 }
 
-/* #s_ImgDiv{ */
-    /* max-width: 70vw; */
-    /* width: fit-content; */
-    /* background-color: red; */
-    /* padding:10px; */
-/* } */
 #selectedImg{
-    max-height: 70vh;
-    max-width: 70vw;
+    max-height: 82vh;
+    max-width: 82vw;
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.701);
 
 }
@@ -72,3 +68,9 @@
     font-size: 30px;
     cursor: pointer;
 }
+@media only screen and (max-width: 600px) {
+    #s_btns button{
+        font-size: 24px;
+    }
+    
+  }

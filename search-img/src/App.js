@@ -1,7 +1,7 @@
 import "./App.css";
 import appLogo from "./resources/appLogo.png";
 import searchIcon from "./resources/searchIcon.png";
-import noProfile from "./resources/NoProfile.png";
+import favIcon from "./resources/favIcon.png";
 import deletePng from "./resources/delete.png";
 import { useEffect, useState, useRef } from "react";
 import ImageC from "./Components/ImageC";
@@ -19,30 +19,44 @@ function App() {
   const [searchNew, setSearchNew] = useState(true);
   const searchResultImgDiv = useRef(null);
   const [scrollDown, setScrollDown] = useState(false);
-  const [selectedImgUrl, setSelectedImgUrl] = useState('');
-  const [selectedImgId, setSelectedImgId] = useState('');
-  const [selectedImgDownload, setSelectedImgDownload] = useState('');
+  const [selectedImgUrl, setSelectedImgUrl] = useState("");
+  const [selectedImgId, setSelectedImgId] = useState("");
+  const [selectedImgDownload, setSelectedImgDownload] = useState("");
   const [selectedBool, setSelectedBool] = useState(false);
-  // const [favImgs, setFavImgs] = useState([]);
-  // const [favImgsId, setFavImgsId] = useState([]);
+  const suggestArray = [
+    "Wallpaper",
+    "Minimal",
+    "Asthetic",
+    "Nature",
+    "Art",
+    "NASA",
+    "Landscape",
+    "Birds",
+    "Zoo",
+    "Portrait",
+    "Mountains",
+    "Forest",
+    "Guitar",
+    "Music",
+    "Sketch",
+  ];
   const [favImgs, setFavImgs] = useState({});
-
 
   let url = `https://api.unsplash.com/search/photos?page=${page}&query=${imgSubj}&client_id=${process.env.REACT_APP_API_KEY}`;
 
-
   const handleScroll = () => {
-        let myDiv = searchResultImgDiv.current;
-        let isScrolledToBottom = myDiv.scrollTop + myDiv.clientHeight > myDiv.scrollHeight - 200;
-        
-        if (isScrolledToBottom && !scrollDown) {
-          setScrollDown(true);
-        } else if (!isScrolledToBottom && scrollDown) {
-          setScrollDown(false);
-        }
-        console.log("handleScroll ran ->"+scrollDown)
+    let myDiv = searchResultImgDiv.current;
+    let isScrolledToBottom =
+      myDiv.scrollTop + myDiv.clientHeight > myDiv.scrollHeight - 200;
+
+    if (isScrolledToBottom && !scrollDown) {
+      setScrollDown(true);
+    } else if (!isScrolledToBottom && scrollDown) {
+      setScrollDown(false);
+    }
+    console.log("handleScroll ran ->" + scrollDown);
   };
-      
+
   //get from local storage
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem("localM"))) {
@@ -50,12 +64,10 @@ function App() {
       setDarkMode(false);
     }
 
-    const storedFavImages = JSON.parse(localStorage.getItem("localFavImgs")) || {};
+    const storedFavImages =
+      JSON.parse(localStorage.getItem("localFavImgs")) || {};
     setFavImgs(storedFavImages);
   }, []);
- 
-  
-
 
   function toggleDarkMode() {
     setDarkMode(!darkMode);
@@ -71,11 +83,10 @@ function App() {
     const response = await fetch(url);
     const data = await response.json();
 
-    setFetchedImgs(prev => [...prev,...data.results]);
+    setFetchedImgs((prev) => [...prev, ...data.results]);
     console.log("fechImgs");
     setLoading(false);
-    setScrollDown(false)
-
+    setScrollDown(false);
   }
   function handleSubmit(e) {
     e.preventDefault();
@@ -86,53 +97,55 @@ function App() {
       setNewInput("");
     }
   }
-
   useEffect(() => {
-
+    setTimeout(() => {
+      setImgSubj(suggestArray[Math.floor(Math.random() * suggestArray.length)])
+    }, 100);
+    
+  },[])
+  useEffect(() => {
     if (imgSubj !== "") fetchImgs();
   }, [imgSubj, page]);
 
   function addMoreImgs() {
-    document.getElementById('moreBtn').classList.add('hideMoreBtn');
+    document.getElementById("moreBtn").classList.add("hideMoreBtn");
     setSearchNew(false);
     setPage((prev) => prev + 1);
   }
 
-  function handleChangeSelectImg(url,id,dl){
+  function handleChangeSelectImg(url, id, dl) {
     setSelectedImgUrl(url);
     setSelectedImgId(id);
     setSelectedImgDownload(dl);
   }
 
-  function changeSelectedBool(b){
+  function changeSelectedBool(b) {
     setSelectedBool(b);
   }
 
   function setFav(url, id) {
     const updatedFavImages = { ...favImgs };
-  
+
     if (likedOrNot(id)) {
       delete updatedFavImages[id];
     } else {
       updatedFavImages[id] = url;
     }
-  
+
     setFavImgs(updatedFavImages);
-  
+
     localStorage.setItem("localFavImgs", JSON.stringify(updatedFavImages));
   }
-  
-  function deleteAllFav(){
+
+  function deleteAllFav() {
     setFavImgs({});
     localStorage.setItem("localFavImgs", JSON.stringify({}));
   }
-
-  function likedOrNot(id){
+  function likedOrNot(id) {
     return favImgs.hasOwnProperty(id);
   }
 
   console.log("app end");
-  
 
   return (
     <div>
@@ -148,7 +161,7 @@ function App() {
         />
       </div>
       <div id="headDiv" className={darkMode ? "" : "lMode"}>
-        <img src={appLogo} id="logoImg"></img>
+        <img src={appLogo} id="logoImg" alt=""></img>
 
         <form id="searchForm" onSubmit={(e) => handleSubmit(e)}>
           <input
@@ -176,10 +189,12 @@ function App() {
 
         <div id="userDiv">
           <img
-            src={noProfile}
+            id="favIcon"
+            src={favIcon}
             onClick={() => {
               setUserMode(!userMode);
             }}
+            alt=""
           ></img>
           <div
             id="userDataDiv"
@@ -187,108 +202,73 @@ function App() {
               darkMode ? "" : "lMode"
             }`}
           >
-            <div id="user">
-              <img src={noProfile}></img>
-              <div id="userName">Kaif Hussain</div>
-            </div>
             <div id="favImagesDiv">
-              <div style={{
-                marginTop:'12px'
-              }}>
+              <div>
                 <p>Favorite Images</p>
-              <button id="deleteAllFavBtn" title="Delete All Favs" onClick={deleteAllFav} className={Object.keys(favImgs).length > 0 ? '':'hide'}><img src={deletePng}></img></button>
+                <button
+                  id="deleteAllFavBtn"
+                  title="Delete All Favs"
+                  onClick={deleteAllFav}
+                  className={Object.keys(favImgs).length > 0 ? "" : "hide"}
+                >
+                  <img src={deletePng} alt=""></img>
+                </button>
               </div>
-              <div id='favImgsDiv'>
-              {Object.keys(favImgs).length > 0
-            ? Object.keys(favImgs).map((id) => {
-                return (
-                  // <img src={imgUrl}></img>
-                  <ImageC
-                    // key={favImgsId[i]}
-                    key={id}
-                    src={favImgs[id]}
-                    handleChangeSelectImg={handleChangeSelectImg}
-                    imgId={id}
-                    imgUrl={favImgs[id]}
-                    changeSelectedBool={changeSelectedBool}
-                    // dl={}
-
-                  />
-                );
-              })
-            : (
-                <div style={{
-                  color:'gray',
-                  fontSize:'12px',
-                  fontFamily:'monospace',
-                  // border:'1px solid red',
-                  // position:'absolute',
-                  // left:'0',
-                  // top:'24px'
-                }}>
-                  Nothing here!
-                </div>
-              )}
+              <div id="favImgsDiv">
+                {Object.keys(favImgs).length > 0 ? (
+                  Object.keys(favImgs).map((id) => {
+                    return (
+                      <ImageC
+                        key={id}
+                        src={favImgs[id]}
+                        handleChangeSelectImg={handleChangeSelectImg}
+                        imgId={id}
+                        imgUrl={favImgs[id]}
+                        changeSelectedBool={changeSelectedBool}
+                        dl={selectedImgDownload}
+                      />
+                    );
+                  })
+                ) : (
+                  <div
+                    style={{
+                      color: "gray",
+                      fontSize: "12px",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    Nothing here!
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
+
         <div id="suggestionDiv">
           <span>Suggestions: </span>
-          <div
-            className="suggestionItem"
-            onClick={() => {
-              setPage(1);
-              setSearchNew(true);
-              setImgSubj("Wallpaper");
-            }}
-          >
-            Wallpaper
-          </div>
-          <div
-            className="suggestionItem"
-            onClick={() => {
-              setSearchNew(true);
-              setPage(1);
-              if (imgSubj !== "Minimal") setImgSubj("Minimal");
-            }}
-          >
-            Minimal
-          </div>
-          <div
-            className="suggestionItem"
-            onClick={() => {
-              setPage(1);
-              setSearchNew(true);
-              if (imgSubj !== "Asthetic") setImgSubj("Asthetic");
-            }}
-          >
-            Asthetic
-          </div>
-          <div
-            className="suggestionItem"
-            onClick={() => {
-              setPage(1);
-              setSearchNew(true);
-              if (imgSubj !== "Nature") setImgSubj("Nature");
-            }}
-          >
-            Nature
-          </div>
-          <div
-            className="suggestionItem"
-            onClick={() => {
-              setPage(1);
-              setSearchNew(true);
-              if (imgSubj !== "AI art") setImgSubj("AI art");
-            }}
-          >
-            AI art
-          </div>
+          
+          {suggestArray.map((i) => (
+            <div
+              key={i}
+              className="suggestionItem"
+              onClick={() => {
+                setPage(1);
+                setSearchNew(true);
+                setImgSubj(i);
+              }}
+            >
+              {i}
+            </div>
+          ))}
         </div>
       </div>
 
-      <div id="searchResultDiv" ref={searchResultImgDiv} onScroll={handleScroll}>
+      <div
+        id="searchResultDiv"
+        ref={searchResultImgDiv}
+        onScroll={handleScroll}
+      >
         <div id="loading" className={loading ? "" : "hide"}></div>
         <div id="searchResultTitle" className={darkMode ? "" : "lMode"}>
           <span id="searchResultTitleName">{imgSubj}</span>
