@@ -2,8 +2,8 @@
 
 This is a ReactJS project where you can search for images (using the Unsplash API).
 
-![image](https://github.com/kaifussain/searchIMG/assets/113294231/65e935e1-3dfc-493b-9c19-7be099c7be9d)
-
+[![Video Title](https://github.com/kaifussain/searchIMG/assets/113294231/65e935e1-3dfc-493b-9c19-7be099c7be9d)](https://youtu.be/a_D_lDPZ0bY)
+<sub>_Click on the Image to watch a demo video on YouTube._<sub>
 ## Features
 
 - **Search Images:** Enter keywords in the search bar to find relevant images.
@@ -17,7 +17,7 @@ This is a ReactJS project where you can search for images (using the Unsplash AP
   ```bash
   git clone https://github.com/kaifussain/searchIMG.git
   ```
-- Step 2: _Create a .env file in the root directory of the project and add your API key to the .env file._
+- Step 2: Create a .env file in the root directory of the project and add your API key to the .env file.
   ```bash
   REACT_APP_API_KEY=your-api-key-goes-here
   ```
