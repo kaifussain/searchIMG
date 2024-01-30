@@ -12,3 +12,23 @@ This is a ReactJS project where you can search for images (using the Unsplash AP
 - **Download:** Good quality Images can be downloaded.
 - **Themes:** You can switch between dark and light mode.
 
+## Want to try?
+- Step 1: Clone this repository.
+  ```bash
+  git clone https://github.com/kaifussain/searchIMG.git
+  ```
+- Step 2: _Create a .env file in the root directory of the project and add your API key to the .env file._
+  ```bash
+  REACT_APP_API_KEY=your-api-key-goes-here
+  ```
+  _You can get the Unsplash API from here https://unsplash.com/developers ._
+  
+- Step 3: Install Dependencies (You need to have NodeJS installed).
+  ```bash
+  npm install
+  ```
+- Step 4: Run the App.
+  ```bash
+  npm start
+  ```
+  That's it! You're all set up to explore this web app.
