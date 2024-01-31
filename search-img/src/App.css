@@ -9,7 +9,7 @@
 #headDiv{
     z-index: 3;
     display: grid;
-    grid-template-columns: 110px 3fr 18px 40px;
+    grid-template-columns: 110px 3fr 18px 24px;
     justify-content: center;
     align-items: center;
     background-color: #212121;
@@ -307,10 +307,9 @@
     }
 }
 
-
 @media only screen and (max-width: 600px) {
     #headDiv{
-        grid-template-columns: 78px 3fr 18px 34px;
+        grid-template-columns: 78px 3fr 18px 24px;
     }
     #logoImg{
         width: 70px;

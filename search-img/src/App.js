@@ -54,7 +54,6 @@ function App() {
     } else if (!isScrolledToBottom && scrollDown) {
       setScrollDown(false);
     }
-    console.log("handleScroll ran ->" + scrollDown);
   };
 
   //get from local storage
@@ -64,8 +63,7 @@ function App() {
       setDarkMode(false);
     }
 
-    const storedFavImages =
-      JSON.parse(localStorage.getItem("localFavImgs")) || {};
+    const storedFavImages = JSON.parse(localStorage.getItem("localFavImgs")) || {};
     setFavImgs(storedFavImages);
   }, []);
 
@@ -86,7 +84,6 @@ function App() {
     setFetchedImgs((prev) => [...prev, ...data.results]);
     console.log("fechImgs");
     setLoading(false);
-    setScrollDown(false);
   }
   function handleSubmit(e) {
     e.preventDefault();
@@ -104,7 +101,11 @@ function App() {
     
   },[])
   useEffect(() => {
-    if (imgSubj !== "") fetchImgs();
+    if (imgSubj !== "") {
+    document.getElementById("moreBtn").classList.add("hideMoreBtn");
+
+      fetchImgs();
+    }
   }, [imgSubj, page]);
 
   function addMoreImgs() {
@@ -123,13 +124,13 @@ function App() {
     setSelectedBool(b);
   }
 
-  function setFav(url, id) {
+  function setFav(url, id, downUrl) {
     const updatedFavImages = { ...favImgs };
 
     if (likedOrNot(id)) {
       delete updatedFavImages[id];
     } else {
-      updatedFavImages[id] = url;
+      updatedFavImages[id] = [url,downUrl];
     }
 
     setFavImgs(updatedFavImages);
@@ -157,7 +158,6 @@ function App() {
           changeSelectedBool={changeSelectedBool}
           setFav={setFav}
           likedOrNot={() => likedOrNot(selectedImgId)}
-          downloadlink={fetchedImgs}
         />
       </div>
       <div id="headDiv" className={darkMode ? "" : "lMode"}>
@@ -217,15 +217,16 @@ function App() {
               <div id="favImgsDiv">
                 {Object.keys(favImgs).length > 0 ? (
                   Object.keys(favImgs).map((id) => {
+                    const [imgUrl, downloadUrl] = favImgs[id];
                     return (
                       <ImageC
                         key={id}
-                        src={favImgs[id]}
+                        src={imgUrl}
                         handleChangeSelectImg={handleChangeSelectImg}
                         imgId={id}
-                        imgUrl={favImgs[id]}
+                        imgUrl={imgUrl}
                         changeSelectedBool={changeSelectedBool}
-                        dl={selectedImgDownload}
+                        dl={downloadUrl}
                       />
                     );
                   })

@@ -16,7 +16,7 @@ const SelectedImg = (props) => {
             <img src={props.url} id='selectedImg' alt=":("></img>
         <div>
             <div id='s_btns'>
-              <button id='addToFav' onClick={()=>props.setFav(props.url,props.id)} title={props.likedOrNot()? "Remove from Fav": "Add to Fav"}>
+              <button id='addToFav' onClick={()=>props.setFav(props.url,props.id,props.dl)} title={props.likedOrNot()? "Remove from Fav": "Add to Fav"}>
                 {
                   props.likedOrNot()? '❤️' :'🤍' 
                 }
