@@ -12,7 +12,7 @@ This is a ReactJS project where you can search for images (using the Unsplash AP
 - **Download:** Good quality Images can be downloaded.
 - **Themes:** You can switch between dark and light mode.
 
-## Want to try?
+## Want to work on this project?
 - Step 1: Clone this repository.
   ```bash
   git clone https://github.com/kaifussain/searchIMG.git
@@ -31,4 +31,4 @@ This is a ReactJS project where you can search for images (using the Unsplash AP
   ```bash
   npm start
   ```
-  That's it! You're all set up to explore this web app.
+  That's it! You're all set up.
